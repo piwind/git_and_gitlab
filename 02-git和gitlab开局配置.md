@@ -24,6 +24,7 @@ git全局配置文件在 `C:/Users/pp/.gitconfig` ，也就是 `${HOME}/.gitconf
 	email = yourname@domain.com
 [core]
 	autocrlf = false
+	quotepath = false
 [credential "http://10.30.10.200:10088"]
 	provider = generic
 [alias]
@@ -32,6 +33,11 @@ git全局配置文件在 `C:/Users/pp/.gitconfig` ，也就是 `${HOME}/.gitconf
 	rlog = reflog
 	co = checkout
 	cob = checkout -b
+[gui]
+	encoding = utf-8
+[i18n]
+	commitEncoding = utf-8
+	logOutputEncoding = utf-8
 ```
 
 
@@ -74,3 +80,37 @@ CredentialHelperSelector配置：选择默认的manager-core即可
 ![image-20231016133830015](_MARKDOWN_ASSETS/02-git和gitlab开局配置.assets/image-20231016133830015.png)
 
 <img src="_MARKDOWN_ASSETS/02-git和gitlab开局配置.assets/image-20231016134003977.png" alt="image-20231016134003977" style="zoom:67%;" />
+
+### 1.4 git status显示中文异常
+
+参考链接：
+
+- [core.quotePath](https://git-scm.com/docs/git-config#Documentation/git-config.txt-corequotePath)
+- [解决 Git 在 windows 下中文乱码的问题](https://zhuanlan.zhihu.com/p/357002483)
+- [git status 显示中文和解决中文乱码](https://blog.csdn.net/u012145252/article/details/81775362)
+
+问题：
+
+![image-20231018161839240](_MARKDOWN_ASSETS/02-git和gitlab开局配置.assets/image-20231018161839240.png)
+
+**解决方法：**
+
+```bash
+git config --global core.quotepath false
+git config --global gui.encoding utf-8
+git config --global i18n.commitEncoding utf-8
+git config --global i18n.logOutputEncoding utf-8
+```
+
+（本例中无需操作，因为默认已经满足了）再编辑git软件目录下的 `etc/inputrc`，将其中的output-meta和convert-meta的两行调整如下：
+
+```
+set output-meta on
+set convert-meta off
+```
+
+**效果如下：**
+
+![image-20231018171232963](_MARKDOWN_ASSETS/02-git和gitlab开局配置.assets/image-20231018171232963.png)
+
+

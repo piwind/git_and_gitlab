@@ -12,6 +12,8 @@
 - [git undo all uncommitted or unsaved changes](https://stackoverflow.com/questions/14075581/git-undo-all-uncommitted-or-unsaved-changes)
 - [How to undo (almost) anything with Git](https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/)
 
+注意：下面提到的本地文件，通用的说法是 **工作目录（working directory）**
+
 **问题如下：**
 
 <img src="_MARKDOWN_ASSETS/03-git和gitlab答疑.assets/image-20231017181957305.png" alt="image-20231017181957305" style="zoom:80%;" />
@@ -212,4 +214,44 @@ git push
 <img src="_MARKDOWN_ASSETS/03-git和gitlab答疑.assets/image-20231017212831240.png" alt="image-20231017212831240" style="zoom:67%;" />
 
 **总结：不要手贱去误删除gitlab上的远程仓库内容**
+
+## 3. gitlab上显示的目录名称含有"/"
+
+<img src="_MARKDOWN_ASSETS/03-git和gitlab答疑.assets/image-20231018133221605.png" alt="image-20231018133221605" style="zoom: 67%;" />
+
+这种是由于这个目录下面有且只有一个子目录，因此显示上直接合并了
+
+## 4. gitlab远程仓库的内容在服务器上是怎么存储的
+
+参考链接：
+
+- [Gitlab repositories file content location](https://stackoverflow.com/questions/49978452/gitlab-repositories-file-content-location)
+- [What is the difference between "git init" and "git init --bare"?](https://stackoverflow.com/questions/7861184/what-is-the-difference-between-git-init-and-git-init-bare)
+- [What's the -practical- difference between a Bare and non-Bare repository?](https://stackoverflow.com/questions/5540883/whats-the-practical-difference-between-a-bare-and-non-bare-repository)
+- [How do you use "git --bare init" repository?](https://stackoverflow.com/questions/7632454/how-do-you-use-git-bare-init-repository)
+- [Restoring Entire Project from .git folder [duplicate]](https://stackoverflow.com/questions/41312852/restoring-entire-project-from-git-folder)
+- [Is there any way to recovery gitlab repositories from data directory like below?](https://stackoverflow.com/questions/58814633/is-there-any-way-to-recovery-gitlab-repositories-from-data-directory-like-below)
+- [Repository storage - GitLab Documentation](https://docs.gitlab.com/ee/administration/repository_storage_paths.html)
+- [仓库存储类型](https://docs.gitlab.cn/jh/administration/repository_storage_types.html)
+- [Where are repo files stored?](https://forum.gitlab.com/t/where-are-repo-files-stored/14892)
+
+查看gitlab容器对应的volume的内容，示例路径：/home/docker/lib/docker/volumes/gitlab_gitlab/_data/repositories/guchaodong
+
+看到里面没有工作目录的内容，仅有git仓库。要取出其中的工作路径的内容，则需要使用git clone来实现。
+
+ChatGPT的回答：
+
+```
+在Git中，仓库（repository）由两部分组成：Git存储库（Git repository）和工作目录（working directory）。
+
+	1. Git存储库（Git repository）：.git 目录是Git存储库的核心，它包含了Git跟踪和管理版本控制信息所需的所有数据。在Git存储库中，您可以找到提交历史、分支、标签、配置文件等。.git 目录是隐藏目录，它通常位于仓库的根目录下。
+
+	在您提供的示例中，每个以 .git 结尾的目录都代表一个Git存储库，其中包含了相应仓库的版本控制信息和历史记录。例如，00-demo-test.git 是一个Git存储库，ceshi.git 是另一个Git存储库，以此类推。
+
+	2. 工作目录（working directory）：工作目录是您实际在其中进行编辑、修改文件的目录。它是Git存储库中的一个副本，包含了仓库中最新提交的文件版本。通常，工作目录是在您克隆或检出仓库时创建的。
+
+	工作目录中的文件是可见的，您可以在其中进行编辑、添加、删除等操作。当您对文件进行修改后，可以使用Git命令将更改提交到Git存储库中，形成新的提交。
+
+通常情况下，GitLab中的仓库只存储Git存储库的信息，而不包含工作目录的内容。工作目录是在克隆或检出仓库时从Git存储库中提取的，并存储在您本地的文件系统中。
+```
 
