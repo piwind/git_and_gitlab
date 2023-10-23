@@ -255,3 +255,27 @@ ChatGPT的回答：
 通常情况下，GitLab中的仓库只存储Git存储库的信息，而不包含工作目录的内容。工作目录是在克隆或检出仓库时从Git存储库中提取的，并存储在您本地的文件系统中。
 ```
 
+## 5. git配置和切换多个远程仓库
+
+参考链接：
+
+- [git如何配置多个远程仓库，并且进行切换](https://zhuanlan.zhihu.com/p/635602242)
+- [Can I specify multiple users for myself in .gitconfig?](https://stackoverflow.com/questions/4220416/can-i-specify-multiple-users-for-myself-in-gitconfig)
+
+简单的命令如下：
+
+```bash
+## 查看已配置的远程仓库列表
+git remote -v
+
+## 再添加一个远程仓库
+git remote add <自定义名称> <第二个远程仓库的URL>
+## push
+git push -u <自定义名称> <要上传的分支>
+
+## 删除远程仓库
+git remote rm <自定义名称>
+```
+
+这里会有个关于配置的name和email的问题，注意最开始用git config --global user.name 和 user.email的内容，主要用于记录提交（commit）历史中的作者信息，也可以通过git log来看到，而实际上与推送（push）操作和哪个远程仓库无关
+

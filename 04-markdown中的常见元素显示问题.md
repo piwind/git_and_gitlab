@@ -244,3 +244,46 @@ Press <kbd>Enter</kbd> to go to the next page.
 }
 ```
 
+
+
+
+
+## 1. 主要问题：gitlab上的markdown显示图片的问题，无法显示html
+
+
+
+
+
+## 2. 在github尝试一下
+
+首先调整下账号设置：
+
+- github - settings - appearance，
+- github - settings - repositories，设置默认分支为master而不是main
+
+在github上新建一个repository，再到本地仓库中上传内容
+
+```bash
+git remote add github https://github.com/piwind/git_and_gitlab.git
+git push -u github master
+```
+
+上传上去的链接：https://github.com/piwind/git_and_gitlab/blob/master/04-markdown%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%85%83%E7%B4%A0%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.md
+
+**实测情况如下：**
+
+- 支持inline html，以及img元素，但img中的style没有生效，其他修改图片大小方式也不行
+- 支持流程图
+- 不支持tabs
+- 支持emoji
+- 不支持inline diff
+- 支持math
+- 不支持TOC
+- 无法嵌入视频音频
+- 支持Collapsible section
+- 不支持两种跳转标题的link
+- 支持Using references link
+- 表格全部适配，但是json表格不支持
+
+
+
